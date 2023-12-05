@@ -1,5 +1,5 @@
 import * as dotenv from 'dotenv';
-dotenv.config();
+dotenv.config({ path: './envs/.env' });
 
 import { Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
@@ -10,16 +10,15 @@ const logger = new Logger('TypeOrm');
 
 const dataSourceOptions: DataSourceOptions = {
   type: 'postgres',
-  host: process.env.DATABASE_HOST,
-  port: +process.env.DATABASE_PORT,
-  username: process.env.DATABASE_USERNAME,
-  password: process.env.DATABASE_PASSWORD,
-  database: process.env.DATABASE_NAME,
+  host: process.env.POSTGRES_HOST,
+  port: +process.env.POSTGRES_PORT,
+  username: process.env.POSTGRES_USER,
+  password: process.env.POSTGRES_PASSWORD,
+  database: process.env.POSTGRES_DB,
   entities: ['dist/**/*.entity.js'],
   migrations: ['dist/database/migrations/*.js'],
   migrationsTableName: 'migrations',
   migrationsRun: true,
-  synchronize: false,
 };
 
 const dataSource: DataSource = new DataSource(dataSourceOptions);
@@ -28,6 +27,7 @@ export const getTypeOrmConfig = async (
   configService: ConfigService,
 ): Promise<TypeOrmModuleOptions> => ({
   ...dataSourceOptions,
+  synchronize: configService.get<boolean>('DATABASE_SYNCHRONIZE'),
   logging: configService.get<boolean>('DATABASE_LOGGING'),
   logger: logger.log.bind(logger),
 });

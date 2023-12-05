@@ -14,6 +14,6 @@ export class User {
   @Column()
   passwordHash: string;
 
-  @Column()
+  @Column({ nullable: true })
   refreshToken: string;
 }
