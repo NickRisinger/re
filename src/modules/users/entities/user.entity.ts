@@ -16,4 +16,13 @@ export class User {
 
   @Column({ nullable: true })
   refreshToken: string;
+
+  @Column()
+  firstName: string;
+
+  @Column()
+  lastName: string;
+
+  @Column({ nullable: true })
+  secondName: string;
 }
