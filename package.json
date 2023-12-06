@@ -18,6 +18,11 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
+    "typeorm": "pnpm build && npx typeorm",
+    "migration:generate": "pnpm typeorm migration:generate ./src/database/migrations -d ./dist/config/type-orm.config.js",
+    "migration:run": "pnpm typeorm migration:run -d ./dist/config/type-orm.config.js",
+    "migration:create": "scripts/migrations/create.sh",
+    "migration:revert": "pnpm typeorm migration:revert",
     "docker:prune": "docker system prune --all"
   },
   "dependencies": {
@@ -52,6 +57,7 @@
     "@types/supertest": "^2.0.12",
     "@typescript-eslint/eslint-plugin": "^6.0.0",
     "@typescript-eslint/parser": "^6.0.0",
+    "cross-var": "^1.1.0",
     "eslint": "^8.42.0",
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-prettier": "^5.0.0",

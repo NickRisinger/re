@@ -12,6 +12,8 @@ export class UsersService {
     private readonly userRepository: Repository<User>,
   ) {}
 
+  async findAll() {}
+
   async findById(id: number) {
     return await this.userRepository.findOneBy({ id });
   }
@@ -38,5 +40,11 @@ export class UsersService {
 
   update(id: number, updateUserDto: Partial<User>) {
     return this.userRepository.update(id, updateUserDto);
+  }
+
+  async updateRefreshToken(id: number, hashedRefreshToken: string) {
+    return await this.userRepository.update(id, {
+      refreshToken: hashedRefreshToken,
+    });
   }
 }
